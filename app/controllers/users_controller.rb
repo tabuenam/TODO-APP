@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 	
 	session[:user_id] = @user.id
 	
-	redirect_to '/welcome'
+	redirect_to '/'
 	
   end
 end
