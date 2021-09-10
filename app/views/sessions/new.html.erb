@@ -1,0 +1,21 @@
+<% flash.each do |type, msg| %>
+  <div class="container warning">
+    <%= msg %>
+  </div>
+<% end %>
+
+<div class="container">
+	<h1>Login</h1>
+	   <%= form_tag '/login' do %>
+	   <%= label_tag :username%>
+	   <%= text_field_tag :username %>
+	   <%= label_tag :password%>
+	   <%= password_field_tag :password%>
+	   <%= submit_tag "Login"%>
+	<%end%>
+</div>
+
+<div class="container">
+	<h2>No account yet?</h2>
+	<%= button_to "Create account", '/users/new', method: :get, class: 'secondary-button' %>
+</div>
