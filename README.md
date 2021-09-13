@@ -1,29 +1,15 @@
-<<<<<<< HEAD
+
 # TODO-APP
 Software Engineering
-=======
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Versions (To do)
+_Please add the software versions here later_
 
-Things you may want to cover:
+## Routing
 
-* Ruby version
+* The base path / currently routes to /welcome, the "you successfully logged in page". In the future, this should route to the to do app.
+* By default, every page requires the user to be logged in, if he is not, he'll be redirected to the login (which is one of the pages, which can be opened without login, the second one is the account creation)
 
-* System dependencies
+## CSS
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
->>>>>>> 06a299b (Setting up environment and initializing the GitHub repo)
+The CSS styling works with html classes and tag types. Currently, every styling happens in app/assets/stylesheets/application.css. If there's more explanation necessary, please feel free to ask me (Linus).
