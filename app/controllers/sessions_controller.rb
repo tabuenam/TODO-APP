@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
    else
       redirect_to '/login', alert: 'Invalid credentials'
    end
-end
+  end
 
   def login
   end
