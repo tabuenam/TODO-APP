@@ -80,7 +80,11 @@
 class TasksController < ApplicationController
   def new
     @task = Task.new
-    render :show_form
+    render :new
+  end
+
+  def index
+     @tasks = Task.all
   end
 
   def create
@@ -93,7 +97,7 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
     authorize! :edit, @task
-    render :show_form
+    render :edit
   end
 
   def update
@@ -115,7 +119,7 @@ class TasksController < ApplicationController
   def save_task
     if @task.save
       @tasks = Task.accessible_by(current_ability)
-      render :hide_form
+      render :index
     else
       render :show_form
     end
