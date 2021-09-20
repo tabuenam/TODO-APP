@@ -84,8 +84,8 @@ class TasksController < ApplicationController
   end
 
   def index
-	 // Just the tasks of the current user
-	 // Works because of the has_many relation
+	 # Just the tasks of the current user
+	 # Works because of the has_many relation
      @tasks = current_user.tasks
   end
 
@@ -114,6 +114,7 @@ class TasksController < ApplicationController
     authorize! :destroy, @task
     @task.destroy
     @tasks = Task.accessible_by(current_ability)
+    redirect_to '/'
   end
 
   private
@@ -121,14 +122,14 @@ class TasksController < ApplicationController
   def save_task
     if @task.save
       @tasks = Task.accessible_by(current_ability)
-      render :index
+      redirect_to '/'
     else
       render :form
     end
   end
 
   def task_params
-	// If we want to use a param (e.g. description), we have to permit the usage
+	# If we want to use a param (e.g. description), we have to permit the usage
     params.require(:task).permit(:title, :description)
   end
 end
