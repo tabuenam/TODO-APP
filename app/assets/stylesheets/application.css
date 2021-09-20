@@ -36,6 +36,10 @@ body {
 	flex-direction: column;
 }
 
+ul, ol {
+    text-align: left;
+}
+
 div.container {
 	background-color: #333333;
 	width: 50%;
@@ -43,6 +47,7 @@ div.container {
 	padding: 20px;
 	border-radius: 10px;
 	text-align: center;
+	word-break: break-word;
 }
 
 div.container.warning {
@@ -55,6 +60,28 @@ div.container h1, div.container h2 {
 	margin-bottom: 10px;
 }
 
+div.container.task {
+	margin-bottom: 0;
+	text-align: left;
+}
+
+div.container.task h3 {
+	margin: 0;
+}
+
+div.container.task .task-links {
+	text-align: right;
+}
+
+div#error_explanation {
+	background: darkred;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+div#error_explanation h2 {
+	font-size: 14pt;
+}
 
 element.style {
 }
@@ -79,7 +106,7 @@ input:hover {
 
 input[type="submit"] {
 	cursor: pointer;
-	margin-top: 20px;
+	margin: 10px 0;
 }
 
 input[type="submit"]:not(.secondary-button) {
@@ -89,4 +116,14 @@ input[type="submit"]:not(.secondary-button) {
 label {
     display: block;
     margin-top: 20px	;
+}
+
+a, a:visited {
+	color: #dddddd;
+	opacity: 1;
+	transition: .25s ease;
+}
+
+a::hover, a:visited::hover {
+	opacity: .8;
 }

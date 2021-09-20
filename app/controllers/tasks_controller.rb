@@ -80,11 +80,13 @@
 class TasksController < ApplicationController
   def new
     @task = Task.new
-    render :new
+    render :form
   end
 
   def index
-     @tasks = Task.all
+	 // Just the tasks of the current user
+	 // Works because of the has_many relation
+     @tasks = current_user.tasks
   end
 
   def create
@@ -97,7 +99,7 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
     authorize! :edit, @task
-    render :edit
+    render :form
   end
 
   def update
@@ -121,11 +123,12 @@ class TasksController < ApplicationController
       @tasks = Task.accessible_by(current_ability)
       render :index
     else
-      render :show_form
+      render :form
     end
   end
 
   def task_params
-    params.require(:task).permit(:title, :note, :completed)
+	// If we want to use a param (e.g. description), we have to permit the usage
+    params.require(:task).permit(:title, :description)
   end
 end
