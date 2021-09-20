@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+<h1>Your Tasks, <%= current_user.username %>!</h1>
+</div>
+
+<% @tasks.each do |task| %>
+<div class="container task">
+  
+        <h3><%= task.title %></h3>
+        <p><%= task.description %></p>
+		
+        <div class="task-links">
+			<%= link_to 'Edit', edit_task_path(task) %>
+			<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>	
+</div>	
+<% end %>
+
+<div class="container">
+	<%= button_to 'New Task', new_task_path, method: :get %>
+</div>
+
+
+<div class="container">
+	<h2>Want to leave?</h2>
+<%= button_to "Logout", '/logout', method: :delete, class: 'secondary-button'%>
+</div>
+
