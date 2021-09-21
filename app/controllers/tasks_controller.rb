@@ -84,7 +84,7 @@ class TasksController < ApplicationController
   end
 
   def index
-     @tasks = Task.all
+     @tasks = Task.accessible_by(current_ability)
   end
 
   def create
