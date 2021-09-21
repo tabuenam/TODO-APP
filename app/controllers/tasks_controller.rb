@@ -84,9 +84,13 @@ class TasksController < ApplicationController
   end
 
   def index
+<<<<<<< HEAD
 	 # Just the tasks of the current user
 	 # Works because of the has_many relation
      @tasks = current_user.tasks
+=======
+     @tasks = Task.accessible_by(current_ability)
+>>>>>>> 02840e3 (Cancan interface added, user's privileges integra0ted and diferetiation of the tasks per user)
   end
 
   def create
