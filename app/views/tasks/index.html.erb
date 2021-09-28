@@ -15,6 +15,7 @@
   
         <h3><%= task.title %></h3>
         <p><%= task.description %></p>
+        <p><%= task.category %></p>
         <% if (task.due_date) %>
             <% if (task.due_date < Date.today) %>
             <!-- Due date expired -->
