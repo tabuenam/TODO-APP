@@ -15,7 +15,6 @@
  */
 
 html, body {
-	height: 100%;
 	width: 100%;
 	min-width: 500px;
 	margin: 0;
@@ -23,12 +22,14 @@ html, body {
 }
 
 html {
+	height: 100%;
 	background-color: #222222;
 	font-family: sans-serif;
 	color: #dddddd;
 }
 
 body {
+	min-height: 100%;
 	overflow-y: scroll;
 	display: flex;
 	justify-content: center;
@@ -68,6 +69,15 @@ div.container.task {
 div.container.task h3 {
 	margin: 0;
 }
+
+div.container.task p.due_date {
+	font-style: italic;
+}
+
+div.container.task.due_date_expired {
+    background-color: darkred;
+}
+
 
 div.container.task .task-links {
 	text-align: right;

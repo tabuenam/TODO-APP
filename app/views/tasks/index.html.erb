@@ -5,10 +5,25 @@
 </div>
 
 <% @tasks.each do |task| %>
+<% if (task.due_date && task.due_date < Date.today) %>
+<!-- Due date expired -->
+<div class="container task due_date_expired">
+<% else %>
+<!-- It's not too late yet -->
 <div class="container task">
+<% end %>
   
         <h3><%= task.title %></h3>
         <p><%= task.description %></p>
+        <% if (task.due_date) %>
+            <% if (task.due_date < Date.today) %>
+            <!-- Due date expired -->
+            <p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+            <% else %>
+            <!-- It's not too late yet -->
+            <p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+            <% end %>
+        <% end %>
 		
         <div class="task-links">
 			<%= link_to 'Edit', edit_task_path(task) %>
