@@ -130,6 +130,6 @@ class TasksController < ApplicationController
 
   def task_params
 	# If we want to use a param (e.g. description), we have to permit the usage
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :due_date)
   end
 end
