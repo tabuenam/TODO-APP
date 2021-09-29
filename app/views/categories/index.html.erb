@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+<h1>Categories</h1>
+</div>
+
+    <% @categories.each do |category| %>
+      <div class="container task">
+        <h3><%= category.name %></h3>
+			
+			<div class="task-links">
+				<%= link_to 'Edit', edit_category_path(category) %>
+				<%= link_to 'Delete', category, method: :delete, data: { confirm: 'Are you sure?' } %>
+			</div>	
+      </div>
+    <% end %>
+
+<div class="container">
+	<%= button_to 'New Category', new_category_path, method: :get %>
+</div>
+
+<div class="container">
+	<h2>Searching your tasks?</h2>
+<%= button_to "Back home", '/', method: :get, class: 'secondary-button'%>
+</div>
