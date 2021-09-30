@@ -1,0 +1,9 @@
+<div class="container">
+	<h1>Creating/Editing Category</h1>
+
+	<%= render 'form', category: @category %>
+</div>
+
+<div class="container">
+	<%= button_to 'Back', categories_path, class: 'secondary-button', method: :get %>
+</div>

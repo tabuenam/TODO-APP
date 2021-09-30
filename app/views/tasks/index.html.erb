@@ -5,47 +5,52 @@
 </div>
 
 <% @tasks.each do |task| %>
-    <% if (task.due_date && task.due_date < Date.today) %>
-        <!-- Due date expired -->
-        <div class="container task due_date_expired">
-    <% else %>
-        <!-- It's not too late yet -->
-        <div class="container task">
-    <% end %>
-      
-            <h3><%= task.title %></h3>
-            <p><%= task.description %></p>
-            <p><%= task.category %></p>
-            
-            <% if (task.isDone) %>
+	<% if (task.due_date && task.due_date < Date.today) %>
+	<!-- Due date expired -->
+	<div class="container task due_date_expired">
+	<% else %>
+	<!-- It's not too late yet -->
+	<div class="container task">
+	<% end %>
+	  
+			<h3><%= task.title %></h3>
+			<p><%= task.description %></p>
+			
+			<% if (task.category) %>
+				<p class="category"><%= task.category.name %></p>
+			<% end %>
+			
+			<% if (task.due_date) %>
+				<% if (task.due_date < Date.today) %>
+				<!-- Due date expired -->
+				<p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+				<% else %>
+				<!-- It's not too late yet -->
+				<p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+				<% end %>
+			<% end %>
+			
+			<% if (task.isDone) %>
                 <p>Done</p>
             <% else %>
                 <p>Not Done</p>
             <% end %>
-            
-            <% if (task.due_date) %>
-                <% if (task.due_date < Date.today) %>
-                <!-- Due date expired -->
-                <p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
-                <% else %>
-                <!-- It's not too late yet -->
-                <p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
-                <% end %>
-            <% end %>
-    		
-            <div class="task-links">
-                <!-- Line Below is probably not working... VERY CONFUSED-->
-                <a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">Mark as Done</a>
-    			<%= link_to 'Edit', edit_task_path(task) %>
-    			<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
-            </div>	
-    </div>	
+			
+			<div class="task-links">
+			    <a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">Mark as Done</a>
+				<%= link_to 'Edit', edit_task_path(task) %>
+				<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+			</div>	
+	</div>	
 <% end %>
 
 <div class="container">
 	<%= button_to 'New Task', new_task_path, method: :get %>
 </div>
 
+<div class="container">
+	<%= button_to 'Manage categories', '/categories', method: :get, class: 'secondary-button' %>
+</div>
 
 <div class="container">
 	<h2>Want to leave?</h2>
