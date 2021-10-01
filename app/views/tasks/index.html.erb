@@ -13,34 +13,38 @@
 	<div class="container task">
 	<% end %>
 	  
-			<h3><%= task.title %></h3>
-			<p><%= task.description %></p>
-			
-			<% if (task.category) %>
-				<p class="category"><%= task.category.name %></p>
+  		<% if (task.isDone) %>
+  			<p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
+            	<img src = <%= asset_path("checkbox_checked.png") %> alt = "Done">
+     		</a></p>
+        <% else %>
+            <p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
+            	<img src = <%= asset_path("checkbox_unchecked.png") %> alt = "Not Done">
+     		</a></p>
+        <% end %>
+        
+		<h3><%= task.title %></h3>
+		<p><%= task.description %></p>
+		
+		<% if (task.category) %>
+			<p class="category"><%= task.category.name %></p>
+		<% end %>
+		
+		<% if (task.due_date) %>
+			<% if (task.due_date < Date.today) %>
+			<!-- Due date expired -->
+			<p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+			<% else %>
+			<!-- It's not too late yet -->
+			<p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
 			<% end %>
-			
-			<% if (task.due_date) %>
-				<% if (task.due_date < Date.today) %>
-				<!-- Due date expired -->
-				<p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
-				<% else %>
-				<!-- It's not too late yet -->
-				<p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
-				<% end %>
-			<% end %>
-			
-			<% if (task.isDone) %>
-                <p>Done</p>
-            <% else %>
-                <p>Not Done</p>
-            <% end %>
-			
-			<div class="task-links">
-			    <a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">Mark as Done</a>
-				<%= link_to 'Edit', edit_task_path(task) %>
-				<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
-			</div>	
+		<% end %>
+		
+		<div class="task-links">
+		    <a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">Mark as Done</a>
+			<%= link_to 'Edit', edit_task_path(task) %>
+			<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+		</div>	
 	</div>	
 <% end %>
 
