@@ -41,7 +41,6 @@
 		<% end %>
 		
 		<div class="task-links">
-		    <a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">Mark as Done</a>
 			<%= link_to 'Edit', edit_task_path(task) %>
 			<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
 		</div>	
