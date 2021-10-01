@@ -4,6 +4,30 @@
 <h1>Your Tasks, <%= current_user.username %>!</h1>
 </div>
 
+<script>
+	function setParam(key, value) {
+		var url = new URL(location.href);
+		var search_params = url.searchParams;
+		search_params.set(key, value);
+		url.search = search_params.toString();
+		var new_url = url.toString();
+		location.href = new_url;
+	}
+</script>
+
+<div class="container sorting-options secondary-container">
+	<p>Order by:</p>
+	<select onchange="setParam('order_by', this.selectedIndex);">
+		<% @sorting_criterias.each do |criteria| %>
+		<option value="<%= criteria.value %>" <% if criteria.selected %>selected<% end %>><%= criteria.name %></option>
+		<% end %>
+	</select>
+	<input type="submit" 
+		onclick="setParam('asc', <% if @asc %>false<% else %>true<% end %>)"/
+		value="<% if @asc %>↑<% else %>↓<% end %>"
+		class="secondary-button">
+</div>
+
 <% @tasks.each do |task| %>
 	<% if (task.due_date && task.due_date < Date.today) %>
 	<!-- Due date expired -->
@@ -41,11 +65,11 @@
 	<%= button_to 'New Task', new_task_path, method: :get %>
 </div>
 
-<div class="container">
+<div class="container secondary-container">
 	<%= button_to 'Manage categories', '/categories', method: :get, class: 'secondary-button' %>
 </div>
 
-<div class="container">
+<div class="container secondary-container">
 	<h2>Want to leave?</h2>
 <%= button_to "Logout", '/logout', method: :delete, class: 'secondary-button'%>
 </div>
