@@ -37,6 +37,15 @@ class TasksController < ApplicationController
     @tasks = Task.accessible_by(current_ability)
     redirect_to '/'
   end
+  
+  # IDK if this is how I should implement the status_flip, I was able to add another column for 'isDone'
+  def status_flip
+    @task = Task.find(params[:id])
+    authorize! :status_flip, @task
+    @task.toggle(:isDone).save
+    @tasks = Task.accessible_by(current_ability)
+    redirect_to '/'
+  end
 
   def save_task
     if @task.save
@@ -49,6 +58,7 @@ class TasksController < ApplicationController
 
   def task_params
 	# If we want to use a param (e.g. description), we have to permit the usage
-    params.require(:task).permit(:title, :description, :category_id, :due_date)
+    params.require(:task).permit(:title, :description, :category_id, :due_date, :isDone)
   end
+  
 end
