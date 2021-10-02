@@ -51,11 +51,23 @@
 				</a></p>
 			<% end %>
 		</div>
-        
+		
 		<div class="column">
 			<h3><%= task.title %></h3>
 			<p><%= task.description %></p>
 			
+			<% if (task.priority) %>
+				<% if (task.priority == -1) %>
+					<p class="priority"></p>
+				<% elsif (task.priority == 0) %>
+					<p class="priority"> Priority: Low </p>
+				<% elsif (task.priority == 1) %>
+					<p class="priority"> Priority: Medium </p>
+				<% elsif (task.priority == 2) %>
+					<p class="priority"> Priority: High </p>
+				<% end %>
+			<% end %>	
+		
 			<% if (task.category) %>
 				<p class="category"><%= task.category.name %></p>
 			<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_28_232505) do
+ActiveRecord::Schema.define(version: 2021_10_02_233249) do
 
   create_table "categories", force: :cascade do |t|
     t.integer "category_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2021_09_28_232505) do
     t.datetime "due_date"
     t.integer "category_id"
     t.boolean "isDone", default: false
+    t.integer "priority"
   end
 
   create_table "users", force: :cascade do |t|
