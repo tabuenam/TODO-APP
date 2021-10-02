@@ -29,7 +29,10 @@
 </div>
 
 <% @tasks.each do |task| %>
-	<% if (task.due_date && task.due_date < Date.today) %>
+	<% if (task.isDone) %>
+	<!-- Done -->
+	<div class="container task task_done">
+	<% elsif (task.due_date && task.due_date < Date.today) %>
 	<!-- Due date expired -->
 	<div class="container task due_date_expired">
 	<% else %>
@@ -37,33 +40,37 @@
 	<div class="container task">
 	<% end %>
 	  
-  		<% if (task.isDone) %>
-  			<p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
-            	<img src = <%= asset_path("checkbox_checked.png") %> alt = "Done">
-     		</a></p>
-        <% else %>
-            <p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
-            	<img src = <%= asset_path("checkbox_unchecked.png") %> alt = "Not Done">
-     		</a></p>
-        <% end %>
-        
-		<h3><%= task.title %></h3>
-		<p><%= task.description %></p>
-		
-		<% if (task.category) %>
-			<p class="category"><%= task.category.name %></p>
-		<% end %>
-		
-		<% if (task.due_date) %>
-			<% if (task.due_date < Date.today) %>
-			<!-- Due date expired -->
-			<p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+		<div class="column">
+			<% if (task.isDone) %>
+				<p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
+					<img src = <%= asset_path("checkbox_checked.png") %> alt = "Done">
+				</a></p>
 			<% else %>
-			<!-- It's not too late yet -->
-			<p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+				<p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
+					<img src = <%= asset_path("checkbox_unchecked.png") %> alt = "Not Done">
+				</a></p>
 			<% end %>
-		<% end %>
-		
+		</div>
+        
+		<div class="column">
+			<h3><%= task.title %></h3>
+			<p><%= task.description %></p>
+			
+			<% if (task.category) %>
+				<p class="category"><%= task.category.name %></p>
+			<% end %>
+			
+			<% if (task.due_date) %>
+				<% if (task.due_date < Date.today) %>
+				<!-- Due date expired -->
+				<p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+				<% else %>
+				<!-- It's not too late yet -->
+				<p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+				<% end %>
+			<% end %>
+		</div>
+			
 		<div class="task-links">
 			<%= link_to 'Edit', edit_task_path(task) %>
 			<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>

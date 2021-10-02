@@ -9,19 +9,30 @@ class TasksController < ApplicationController
 	# Just the tasks of the current user
 	# Works because of the has_many relation
     @tasks = current_user.tasks
-	case @order_by
-	when 0
-		# Order by title
-		@tasks = @tasks.sort_by {|task| [task.title ? 0 : 1, task.title]}
-	when 1
-		# Order by due date
-		@tasks = @tasks.sort_by {|task| [task.due_date ? 0 : 1, task.due_date]}
-	when 2
-		# Order by category name
-		@tasks = @tasks.sort_by {|task| [task.category&.name ? 0 : 1, task.category&.name]}
-	end
-	if not @asc then
-		# Reversed ascending -> descending
+	if @asc then
+		case @order_by
+		when 0
+			# Order by due date
+			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.due_date ? 0 : 1, task.due_date]}
+		when 1
+			# Order by title
+			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.title ? 0 : 1, task.title]}
+		when 2
+			# Order by category name
+			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.category&.name ? 0 : 1, task.category&.name]}
+		end
+	else
+		case @order_by
+		when 0
+			# Order by due date
+			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.due_date ? 0 : 1, task.due_date]}
+		when 1
+			# Order by title
+			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.title ? 0 : 1, task.title]}
+		when 2
+			# Order by category name
+			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.category&.name ? 0 : 1, task.category&.name]}
+		end
 		@tasks = @tasks.reverse
 	end
   end
@@ -51,7 +62,7 @@ class TasksController < ApplicationController
     authorize! :destroy, @task
     @task.destroy
     @tasks = Task.accessible_by(current_ability)
-    redirect_to '/'
+	redirect_back(fallback_location: '/')
   end
   
   # IDK if this is how I should implement the status_flip, I was able to add another column for 'isDone'
@@ -60,7 +71,7 @@ class TasksController < ApplicationController
     authorize! :status_flip, @task
     @task.toggle(:isDone).save
     @tasks = Task.accessible_by(current_ability)
-    redirect_to '/'
+	redirect_back(fallback_location: '/')
   end
 
   def save_task
@@ -79,8 +90,8 @@ class TasksController < ApplicationController
   
   def init_sorting_criteria
 	@sorting_criterias = [
-		Criteria.new(0, "Title"),
-		Criteria.new(1, "Due date"),
+		Criteria.new(0, "Due date"),
+		Criteria.new(1, "Title"),
 		Criteria.new(2, "Category")
 	]
 	if params[:asc].nil? then

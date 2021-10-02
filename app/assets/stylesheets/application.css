@@ -77,6 +77,13 @@ div.container.task {
 	margin-bottom: 0;
 	text-align: left;
 	position: relative;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+}
+
+div.container.task div.column {
+	margin: 0 20px;
 }
 
 div.container.task h3 {
@@ -85,10 +92,19 @@ div.container.task h3 {
 
 div.container.task p.due_date {
 	font-style: italic;
+	margin: 0;
 }
 
 div.container.task.due_date_expired {
     background-color: darkred;
+}
+
+div.container.task.task_done {
+    background-color: darkgreen;
+}
+
+div.container.task.task_done h3 {
+    text-decoration: line-through;
 }
 
 div.container.task p.category {
@@ -127,7 +143,9 @@ div.container.secondary-container input, div.container.secondary-container selec
 }
 
 div.container.task .task-links {
-	text-align: right;
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
 }
 
 div#error_explanation {
@@ -171,7 +189,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:not(.secondary-button) {
-	background-color: #065a0f;
+	background-color: darkslategray;
 }
 
 label {

@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 2021_09_28_232505) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
     t.datetime "due_date"
-    t.boolean "isDone"
     t.integer "category_id"
+    t.boolean "isDone", default: false
   end
 
   create_table "users", force: :cascade do |t|
