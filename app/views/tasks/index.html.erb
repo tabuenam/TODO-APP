@@ -4,8 +4,36 @@
 <h1>Your Tasks, <%= current_user.username %>!</h1>
 </div>
 
+<script>
+	function setParam(key, value) {
+		var url = new URL(location.href);
+		var search_params = url.searchParams;
+		search_params.set(key, value);
+		url.search = search_params.toString();
+		var new_url = url.toString();
+		location.href = new_url;
+	}
+</script>
+
+<div class="container sorting-options secondary-container">
+	<p>Order by:</p>
+	<select onchange="setParam('order_by', this.selectedIndex);">
+		<% @sorting_criterias.each do |criteria| %>
+		<option value="<%= criteria.value %>" <% if criteria.selected %>selected<% end %>><%= criteria.name %></option>
+		<% end %>
+	</select>
+	<input type="submit" 
+		onclick="setParam('asc', <% if @asc %>false<% else %>true<% end %>)"/
+		value="<% if @asc %>↑<% else %>↓<% end %>"
+		title="Sorting order: <% if @asc %>ascending<% else %>descending<% end %> (change by clicking this button)"
+		class="secondary-button">
+</div>
+
 <% @tasks.each do |task| %>
-	<% if (task.due_date && task.due_date < Date.today) %>
+	<% if (task.isDone) %>
+	<!-- Done -->
+	<div class="container task task_done">
+	<% elsif (task.due_date && task.due_date < Date.today) %>
 	<!-- Due date expired -->
 	<div class="container task due_date_expired">
 	<% else %>
@@ -13,45 +41,49 @@
 	<div class="container task">
 	<% end %>
 	  
-  		<% if (task.isDone) %>
-  			<p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
-            	<img src = <%= asset_path("checkbox_checked.png") %> alt = "Done">
-     		</a></p>
-        <% else %>
-            <p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
-            	<img src = <%= asset_path("checkbox_unchecked.png") %> alt = "Not Done">
-     		</a></p>
-        <% end %>
-        
-		<h3><%= task.title %></h3>
-		<p><%= task.description %></p>
-		
-		<% if (task.priority) %>
-			<% if (task.priority == -1) %>
-                <p class="priority"></p>
-            <% elsif (task.priority == 0) %>
-                <p class="priority"> Priority: Low </p>
-            <% elsif (task.priority == 1) %>
-                <p class="priority"> Priority: Medium </p>
-            <% elsif (task.priority == 2) %>
-                <p class="priority"> Priority: High </p>
-            <% end %>
-		<% end %>	
-	
-		<% if (task.category) %>
-			<p class="category"><%= task.category.name %></p>
-		<% end %>
-		
-		<% if (task.due_date) %>
-			<% if (task.due_date < Date.today) %>
-			<!-- Due date expired -->
-			<p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+		<div class="column">
+			<% if (task.isDone) %>
+				<p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
+					<img src = <%= asset_path("checkbox_checked.png") %> alt = "Done">
+				</a></p>
 			<% else %>
-			<!-- It's not too late yet -->
-			<p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+				<p><a href = "/tasks/<%= task.id %>/status_flip" data-method = "post">
+					<img src = <%= asset_path("checkbox_unchecked.png") %> alt = "Not Done">
+				</a></p>
 			<% end %>
-		<% end %>
+		</div>
 		
+		<div class="column">
+			<h3><%= task.title %></h3>
+			<p><%= task.description %></p>
+			
+			<% if (task.priority) %>
+				<% if (task.priority == -1) %>
+					<p class="priority"></p>
+				<% elsif (task.priority == 0) %>
+					<p class="priority"> Priority: Low </p>
+				<% elsif (task.priority == 1) %>
+					<p class="priority"> Priority: Medium </p>
+				<% elsif (task.priority == 2) %>
+					<p class="priority"> Priority: High </p>
+				<% end %>
+			<% end %>	
+		
+			<% if (task.category) %>
+				<p class="category"><%= task.category.name %></p>
+			<% end %>
+			
+			<% if (task.due_date) %>
+				<% if (task.due_date < Date.today) %>
+				<!-- Due date expired -->
+				<p class="due_date">Was due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+				<% else %>
+				<!-- It's not too late yet -->
+				<p class="due_date">Due: <%= task.due_date.strftime("%m/%d/%Y") %></p>
+				<% end %>
+			<% end %>
+		</div>
+			
 		<div class="task-links">
 			<%= link_to 'Edit', edit_task_path(task) %>
 			<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -63,11 +95,11 @@
 	<%= button_to 'New Task', new_task_path, method: :get %>
 </div>
 
-<div class="container">
+<div class="container secondary-container">
 	<%= button_to 'Manage categories', '/categories', method: :get, class: 'secondary-button' %>
 </div>
 
-<div class="container">
+<div class="container secondary-container">
 	<h2>Want to leave?</h2>
 <%= button_to "Logout", '/logout', method: :delete, class: 'secondary-button'%>
 </div>

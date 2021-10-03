@@ -51,6 +51,18 @@ div.container {
 	word-break: break-word;
 }
 
+div.container.secondary-container {
+    background-color: #2c2c2c;
+    color: #898989;
+    width: 40%;
+	opacity: 0.5;
+	transition: .25s ease;
+}
+
+div.container.secondary-container:hover {
+	opacity: 1;
+}
+
 div.container.warning {
 	background-color: #770101;
 	font-weight: bold;
@@ -65,6 +77,13 @@ div.container.task {
 	margin-bottom: 0;
 	text-align: left;
 	position: relative;
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+}
+
+div.container.task div.column {
+	margin: 0 20px;
 }
 
 div.container.task h3 {
@@ -73,10 +92,19 @@ div.container.task h3 {
 
 div.container.task p.due_date {
 	font-style: italic;
+	margin: 0;
 }
 
 div.container.task.due_date_expired {
     background-color: darkred;
+}
+
+div.container.task.task_done {
+    background-color: darkgreen;
+}
+
+div.container.task.task_done h3 {
+    text-decoration: line-through;
 }
 
 div.container.task p.category {
@@ -91,8 +119,33 @@ div.container.task p.category {
     right: 10px;
 }
 
-div.container.task .task-links {
+div.container.sorting-options {
+    margin-bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
 	text-align: right;
+}
+
+div.container.sorting-options * {
+    display: inline-block;
+	width: auto;
+	font-weight: normal;
+	font-size: 14pt;
+	margin: 0;
+}
+
+div.container.sorting-options p {
+    margin-right: 5px;
+}
+
+div.container.secondary-container input, div.container.secondary-container select {
+    color: #bfbfbf;
+}
+
+div.container.task .task-links {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
 }
 
 div#error_explanation {
@@ -136,7 +189,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:not(.secondary-button) {
-	background-color: #065a0f;
+	background-color: #a14300;
 }
 
 label {
