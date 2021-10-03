@@ -116,7 +116,7 @@ class TasksController < ApplicationController
 	# Convert the string to integer
 	@order_by = @order_by.to_i
 	# If order by is invalid set it to 0
-	if 0 > @order_by || @order_by > 2 then
+	if 0 > @order_by || @order_by > 3 then
 		@order_by = 0
 	end
 	# Select the attribute to order by
