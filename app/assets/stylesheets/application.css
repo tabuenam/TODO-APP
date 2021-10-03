@@ -189,7 +189,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:not(.secondary-button) {
-	background-color: darkslategray;
+	background-color: #a14300;
 }
 
 label {

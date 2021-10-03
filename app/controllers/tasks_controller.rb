@@ -15,9 +15,12 @@ class TasksController < ApplicationController
 			# Order by due date
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.due_date ? 0 : 1, task.due_date]}
 		when 1
+			# Order by priority
+			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.priority ? 0 : 1, task.priority]}
+		when 2
 			# Order by title
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.title ? 0 : 1, task.title]}
-		when 2
+		when 3
 			# Order by category name
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.category&.name ? 0 : 1, task.category&.name]}
 		end
@@ -27,9 +30,12 @@ class TasksController < ApplicationController
 			# Order by due date
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.due_date ? 0 : 1, task.due_date]}
 		when 1
+			# Order by priority
+			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.priority ? 0 : 1, task.priority]}
+		when 2
 			# Order by title
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.title ? 0 : 1, task.title]}
-		when 2
+		when 3
 			# Order by category name
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.category&.name ? 0 : 1, task.category&.name]}
 		end
@@ -91,8 +97,9 @@ class TasksController < ApplicationController
   def init_sorting_criteria
 	@sorting_criterias = [
 		Criteria.new(0, "Due date"),
-		Criteria.new(1, "Title"),
-		Criteria.new(2, "Category")
+		Criteria.new(1, "Priority"),
+		Criteria.new(2, "Title"),
+		Criteria.new(3, "Category")
 	]
 	if params[:asc].nil? then
 		@asc = true
