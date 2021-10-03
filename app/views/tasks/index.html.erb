@@ -25,6 +25,7 @@
 	<input type="submit" 
 		onclick="setParam('asc', <% if @asc %>false<% else %>true<% end %>)"/
 		value="<% if @asc %>↑<% else %>↓<% end %>"
+		title="Sorting order: <% if @asc %>ascending<% else %>descending<% end %> (change by clicking this button)"
 		class="secondary-button">
 </div>
 
