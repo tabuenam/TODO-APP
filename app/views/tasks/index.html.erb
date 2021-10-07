@@ -85,8 +85,10 @@
 		</div>
 			
 		<div class="task-links">
-			<%= link_to 'Edit', edit_task_path(task) %>
-			<%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+			<a href = "<%= edit_task_path(task) %>">
+				<img src = <%= asset_path("edit.png") %> alt = "Edit"></a>
+			<a href = "<%= task_path(task) %>" data-confirm = "Are you sure?" data-method = "delete">
+				<img src = <%= asset_path("delete.png") %> alt = "Delete"></a>
 		</div>	
 	</div>	
 <% end %>
