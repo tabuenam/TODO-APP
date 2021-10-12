@@ -16,8 +16,8 @@
 </script>
 
 <div class="container sorting-options secondary-container">
-	<p>Order by:</p>
-	<select onchange="setParam('order_by', this.selectedIndex);">
+	<p>Sort by:</p>
+	<select onchange="setParam('sort_by', this.selectedIndex);">
 		<% @sorting_criterias.each do |criteria| %>
 		<option value="<%= criteria.value %>" <% if criteria.selected %>selected<% end %>><%= criteria.name %></option>
 		<% end %>

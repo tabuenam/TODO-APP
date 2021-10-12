@@ -10,33 +10,33 @@ class TasksController < ApplicationController
 	# Works because of the has_many relation
     @tasks = current_user.tasks
 	if @asc then
-		case @order_by
+		case @sort_by
 		when 0
-			# Order by due date
+			# Sort by due date
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.due_date ? 0 : 1, task.due_date]}
 		when 1
-			# Order by priority
+			# Sort by priority
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.priority ? 0 : 1, task.priority]}
 		when 2
-			# Order by title
+			# Sort by title
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.title ? 0 : 1, task.title]}
 		when 3
-			# Order by category name
+			# Sort by category name
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 1 : 0, task.category&.name ? 0 : 1, task.category&.name]}
 		end
 	else
-		case @order_by
+		case @sort_by
 		when 0
-			# Order by due date
+			# Sort by due date
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.due_date ? 0 : 1, task.due_date]}
 		when 1
-			# Order by priority
+			# Sort by priority
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.priority ? 0 : 1, task.priority]}
 		when 2
-			# Order by title
+			# Sort by title
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.title ? 0 : 1, task.title]}
 		when 3
-			# Order by category name
+			# Sort by category name
 			@tasks = @tasks.sort_by {|task| [task.isDone ? 0 : 1, task.category&.name ? 0 : 1, task.category&.name]}
 		end
 		@tasks = @tasks.reverse
@@ -108,19 +108,19 @@ class TasksController < ApplicationController
 		@asc = params[:asc].to_s.downcase != "false"
 	end
 	
-	@order_by = params[:order_by]
-	# If order by is not set or invalid, set it to 0
-	if @order_by.nil? || @order_by.to_i.to_s != @order_by then
-		@order_by = "0"
+	@sort_by = params[:sort_by]
+	# If sort by is not set or invalid, set it to 0
+	if @sort_by.nil? || @sort_by.to_i.to_s != @sort_by then
+		@sort_by = "0"
 	end
 	# Convert the string to integer
-	@order_by = @order_by.to_i
-	# If order by is invalid set it to 0
-	if 0 > @order_by || @order_by > 3 then
-		@order_by = 0
+	@sort_by = @sort_by.to_i
+	# If sort by is invalid set it to 0
+	if 0 > @sort_by || @sort_by > 3 then
+		@sort_by = 0
 	end
-	# Select the attribute to order by
-	@sorting_criterias[@order_by].select
+	# Select the attribute to sort by
+	@sorting_criterias[@sort_by].select
   end
   
   class Criteria
