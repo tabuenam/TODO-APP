@@ -9,8 +9,10 @@
         <h3><%= category.name %></h3>
 			
 			<div class="task-links">
-				<%= link_to 'Edit', edit_category_path(category) %>
-				<%= link_to 'Delete', category, method: :delete, data: { confirm: 'Are you sure?' } %>
+			    <a href = "<%= edit_category_path(category) %>">
+				    <img src = <%= asset_path("edit.png") %> alt = "Edit"></a>
+			    <a href = "<%= category_path(category) %>" data-confirm = "Are you sure?" data-method = "delete">
+				    <img src = <%= asset_path("delete.png") %> alt = "Delete"></a>
 			</div>	
       </div>
     <% end %>
