@@ -1,3 +1,9 @@
+<% flash.each do |type, msg| %>
+  <div class="container warning">
+    <%= msg %>
+  </div>
+<% end %>
+
 <div class="container">
 	<h1>Create account</h1>
 	<%= form_for @user do |f|%>
